@@ -1,6 +1,31 @@
 import pygame
 from pygame.locals import *
 
+pygame.init()
+
+screensize = (640, 320)
+
+screen = pygame.display.set_mode(screensize)
+
+clock = pygame.time.Clock()
+
+black = (0,0,0)
+white = (255,255,255)
+
+def text_objects(text, font):
+    textSurface = font.render(text, True, white, )
+    return textSurface, textSurface.get_rect()
+
+def message_display(text):
+    largeText = pygame.font.Font('game_over.ttf, 100')
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = ((screensize/2), (screensize/2))
+    screen.blit(TextSurf, TextRect)
+
+    pygame.display.update()
+
+
+
 class Pong(object):
     def __init__(self, screensize):
 
@@ -15,7 +40,7 @@ class Pong(object):
                                 self.centery-self.radius,
                                 self.radius*2, self.radius*2)
 
-        self.color = (0,0,0)
+        self.color = (black)
 
         self.direction = [1,1]
 
@@ -50,7 +75,7 @@ class Pong(object):
 
     def render(self, screen):
       pygame.draw.circle(screen, self.color, self.rect.center, self.radius, 0)
-      pygame.draw.circle(screen, (255,255,255), self.rect.center, self.radius, 2)
+      pygame.draw.circle(screen, (white), self.rect.center, self.radius, 2)
 
 class AIPaddle(object):
     def __init__(self, screensize):
@@ -64,7 +89,7 @@ class AIPaddle(object):
 
         self.rect = pygame.Rect(0, self.centery-int(self.height*0.5), self.width, self.height)
 
-        self.color = (0,0,0)
+        self.color = (black)
 
         self.speed = 10
 
@@ -78,7 +103,7 @@ class AIPaddle(object):
 
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, 0)
-        pygame.draw.rect(screen, (255,255,255), self.rect, 2)
+        pygame.draw.rect(screen, (white), self.rect, 2)
 
 class PlayerPaddle(object):
     def __init__(self, screensize):
@@ -92,7 +117,7 @@ class PlayerPaddle(object):
 
         self.rect = pygame.Rect(0, self.centery-int(self.height*0.5), self.width, self.height)
 
-        self.color = (0,0,0)
+        self.color = (black)
 
         self.speed = 3
         self.direction = 0
@@ -107,24 +132,45 @@ class PlayerPaddle(object):
 
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, 0)
-        pygame.draw.rect(screen, (255,255,255), self.rect, 2)
+        pygame.draw.rect(screen, (white), self.rect, 2)
 
+
+def pause():
+
+    clock = pygame.time.Clock()
+
+    paused = True
+
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    paused = False
+
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+
+            screen.fill(black)
+
+#        message_display("Paused", (white), -100, size ="large")
+
+#        message_display("Press C to continue or Q to quit.",(white), 25)
+
+        pygame.display.update()
+        clock.tick(5)
 
 
 def main():
-    pygame.init()
-
-    screensize = (640, 320)
-
-    screen = pygame.display.set_mode(screensize)
-
-    clock = pygame.time.Clock()
 
     pong = Pong(screensize)
     ai_paddle = AIPaddle(screensize)
     player_paddle = PlayerPaddle(screensize)
 
-    game_over = False
     running = True
 
     while running:
@@ -145,20 +191,21 @@ def main():
                 elif event.key == K_DOWN and player_paddle.direction == 1:
                     player_paddle.direction = 0
 
+                elif event.key == pygame.K_p:
+                    pause()
+
 
         ai_paddle.update(pong)
         player_paddle.update()
         pong.update(player_paddle, ai_paddle)
 
         if pong.hit_edge_right:
-            print ('You won!')
-            running = False
+            main()
         elif pong.hit_edge_left:
-            print ('You lost!')
-            running = False
+            main()
 
 
-        screen.fill((0,0,0))
+        screen.fill(black)
 
         ai_paddle.render(screen)
         player_paddle.render(screen)
