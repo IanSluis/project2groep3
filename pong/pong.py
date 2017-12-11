@@ -2,6 +2,11 @@ import pygame
 from pygame.locals import *
 
 pygame.init()
+pygame.font.init()
+
+myFont_medium = pygame.font.SysFont("game_over.ttf", 50)
+myFont_small = pygame.font.SysFont("game_over.ttf", 25)
+myFont_large = pygame.font.SysFont("game_over.ttf", 100)
 
 screensize = (640, 320)
 
@@ -12,18 +17,34 @@ clock = pygame.time.Clock()
 black = (0,0,0)
 white = (255,255,255)
 
-def text_objects(text, font):
-    textSurface = font.render(text, True, white, )
-    return textSurface, textSurface.get_rect()
+def intro():
 
-def message_display(text):
-    largeText = pygame.font.Font('game_over.ttf, 100')
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((screensize/2), (screensize/2))
-    screen.blit(TextSurf, TextRect)
+    intro = True
 
-    pygame.display.update()
+    while intro:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
 
+        screen.fill(black)
+
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                main()
+
+            elif event.key == pygame.K_q:
+                pygame.quit()
+                quit()
+
+        pong_text = myFont_large.render("Pong", False, white)
+        start_text = myFont_small.render("Press Space Bar to star or Q to quit.", False, white)
+        screen.blit(pong_text, (220, 50))
+        screen.blit(start_text, (170, 160))
+
+        pygame.display.update()
+        clock.tick(5)
 
 
 class Pong(object):
@@ -91,7 +112,7 @@ class AIPaddle(object):
 
         self.color = (black)
 
-        self.speed = 10
+        self.speed = 4
 
     def update(self, pong):
         if pong.rect.top < self.rect.top:
@@ -137,7 +158,6 @@ class PlayerPaddle(object):
 
 def pause():
 
-    clock = pygame.time.Clock()
 
     paused = True
 
@@ -155,15 +175,37 @@ def pause():
                     pygame.quit()
                     quit()
 
-            screen.fill(black)
-
-#        message_display("Paused", (white), -100, size ="large")
-
-#        message_display("Press C to continue or Q to quit.",(white), 25)
+        pause_text = myFont_medium.render("Paused", False, white)
+        con_text = myFont_small.render("Press C to continue or Q to quit.", False, white)
+        screen.blit(pause_text, (255, 50))
+        screen.blit(con_text, (200, 160))
 
         pygame.display.update()
         clock.tick(5)
 
+def gameover():
+
+    while gameover:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_t:
+                    main()
+
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+
+        go_text = myFont_medium.render("Game Over", False, white)
+        try_text = myFont_small.render("Press T to try again or Q to quit.", False, white)
+        screen.blit(go_text, (255, 50))
+        screen.blit(try_text, (200, 160))
+
+        pygame.display.update()
+        clock.tick(5)
 
 def main():
 
@@ -200,8 +242,10 @@ def main():
         pong.update(player_paddle, ai_paddle)
 
         if pong.hit_edge_right:
+            gameover()
             main()
         elif pong.hit_edge_left:
+            gameover()
             main()
 
 
@@ -215,4 +259,5 @@ def main():
 
     pygame.quit()
 
+intro()
 main()
