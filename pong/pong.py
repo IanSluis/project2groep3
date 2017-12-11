@@ -40,8 +40,10 @@ def intro():
 
         pong_text = myFont_large.render("Pong", False, white)
         start_text = myFont_small.render("Press Space Bar to star or Q to quit.", False, white)
+        use_text = myFont_small.render("Use the arrow keys to move up and down", False, white)
         screen.blit(pong_text, (220, 50))
         screen.blit(start_text, (170, 160))
+        screen.blit(use_text, (170, 200))
 
         pygame.display.update()
         clock.tick(5)
@@ -157,7 +159,6 @@ class PlayerPaddle(object):
 
 
 def pause():
-
 
     paused = True
 
