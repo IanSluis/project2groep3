@@ -1,4 +1,4 @@
-import os, sys, pygame
+import os, sys, pygame, subprocess
 
 #execfile('file.py')
 main_dir = os.path.split(os.path.abspath(__file__))[0]
@@ -19,7 +19,7 @@ WHITE = (255,255,255)
 
 def launch_game(name):
 	print(name)
-	os.system(name)
+	os.popen(name)
 		
 def main(winstyle = 0):	
 	pygame.init()
