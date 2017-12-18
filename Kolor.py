@@ -3,13 +3,13 @@ import os, sys, pygame, subprocess
 #execfile('file.py')
 main_dir = os.path.split(os.path.abspath(__file__))[0]
 platformer_dir = os.path.join(main_dir, 'platformer')
-platformer_file = platformer_dir + "\platformer.py"
+platformer_file = os.path.join(platformer_dir, 'platformer.py')
 space_dir = os.path.join(main_dir, 'python game stuff')
-space_file =  str(space_dir) + "\game.py"
+space_file = os.path.join(space_dir, 'game.py')
 pong_dir = os.path.join(main_dir, 'pong')
-pong_file =  pong_dir + "\pong.py"
+pong_file =  os.path.join(pong_dir, 'pong.py')
 starjump_dir = os.path.join(main_dir, 'StarJump')
-starjump_file =  starjump_dir + "\jumpstar.py"
+starjump_file = os.path.join(starjump_dir, 'jumpstar.py')
 selectablegames = [platformer_file,space_file,pong_file,starjump_file]
 
 clock = pygame.time.Clock() 
