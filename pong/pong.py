@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys
 from pygame.locals import *
 
 pygame.init()
@@ -8,6 +8,10 @@ myFont_medium = pygame.font.SysFont("game_over.ttf", 50)
 myFont_small = pygame.font.SysFont("game_over.ttf", 25)
 myFont_large = pygame.font.SysFont("game_over.ttf", 100)
 
+WINDOWWIDTH = 640
+WINDOWHEIGHT = 320
+LINETHICKNESS = 10
+
 screensize = (640, 320)
 
 screen = pygame.display.set_mode(screensize)
@@ -16,6 +20,8 @@ clock = pygame.time.Clock()
 
 black = (0,0,0)
 white = (255,255,255)
+grey = (210, 210, 210)
+
 
 def intro():
 
@@ -29,24 +35,34 @@ def intro():
 
         screen.fill(black)
 
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+        if 100+100 > mouse[0] > 100 and 170+50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (100, 170, 100, 50))
+            if click[0] == 1:
                 main()
+        else:
+            pygame.draw.rect(screen, white, (100, 170, 100, 50))
 
-            elif event.key == pygame.K_q:
+        if 400 + 100 > mouse[0] > 400 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (400, 170, 100, 50))
+            if click[0] == 1:
                 pygame.quit()
                 quit()
+        else:
+            pygame.draw.rect(screen, white, (400, 170, 100, 50))
 
         pong_text = myFont_large.render("Pong", False, white)
-        start_text = myFont_small.render("Press Space Bar to star or Q to quit.", False, white)
-        use_text = myFont_small.render("Use the arrow keys to move up and down", False, white)
+        start_text = myFont_medium.render("Play", False, black)
+        quit_text = myFont_medium.render("Quit", False, black)
+
         screen.blit(pong_text, (220, 50))
-        screen.blit(start_text, (170, 160))
-        screen.blit(use_text, (170, 200))
+        screen.blit(start_text, (115, 180))
+        screen.blit(quit_text, (415, 180))
 
         pygame.display.update()
-        clock.tick(5)
+        clock.tick(30)
 
 
 class Pong(object):
@@ -72,7 +88,6 @@ class Pong(object):
 
         self.hit_edge_left = False
         self.hit_edge_right = False
-
 
     def update(self, player_paddle, ai_paddle):
 
@@ -100,6 +115,7 @@ class Pong(object):
       pygame.draw.circle(screen, self.color, self.rect.center, self.radius, 0)
       pygame.draw.circle(screen, (white), self.rect.center, self.radius, 2)
 
+
 class AIPaddle(object):
     def __init__(self, screensize):
         self.screensize = screensize
@@ -114,7 +130,7 @@ class AIPaddle(object):
 
         self.color = (black)
 
-        self.speed = 4
+        self.speed = 5
 
     def update(self, pong):
         if pong.rect.top < self.rect.top:
@@ -127,6 +143,7 @@ class AIPaddle(object):
     def render(self, screen):
         pygame.draw.rect(screen, self.color, self.rect, 0)
         pygame.draw.rect(screen, (white), self.rect, 2)
+
 
 class PlayerPaddle(object):
     def __init__(self, screensize):
@@ -162,6 +179,7 @@ def pause():
 
     paused = True
 
+
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -176,13 +194,37 @@ def pause():
                     pygame.quit()
                     quit()
 
-        pause_text = myFont_medium.render("Paused", False, white)
-        con_text = myFont_small.render("Press C to continue or Q to quit.", False, white)
-        screen.blit(pause_text, (255, 50))
-        screen.blit(con_text, (200, 160))
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 100 + 100 > mouse[0] > 100 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (100, 170, 100, 50))
+            if click[0] == 1:
+                paused = False
+        else:
+            pygame.draw.rect(screen, white, (100, 170, 100, 50))
+
+        if 400 + 100 > mouse[0] > 400 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (400, 170, 100, 50))
+            if click[0] == 1:
+                pygame.quit()
+                quit()
+        else:
+            pygame.draw.rect(screen, white, (400, 170, 100, 50))
+
+
+        pause_text = myFont_large.render("Paused", False, white)
+        go_text = myFont_medium.render("Go", False, black)
+        quit_text = myFont_medium.render("Quit", False, black)
+
+        screen.blit(pause_text, (190, 50))
+        screen.blit(go_text, (125, 180))
+        screen.blit(quit_text, (415, 180))
+
 
         pygame.display.update()
-        clock.tick(5)
+        clock.tick(30)
+
 
 def gameover():
 
@@ -200,13 +242,34 @@ def gameover():
                     pygame.quit()
                     quit()
 
-        go_text = myFont_medium.render("Game Over", False, white)
-        try_text = myFont_small.render("Press T to try again or Q to quit.", False, white)
-        screen.blit(go_text, (255, 50))
-        screen.blit(try_text, (200, 160))
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 100 + 100 > mouse[0] > 100 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (100, 170, 185, 50))
+            if click[0] == 1:
+                main()
+        else:
+            pygame.draw.rect(screen, white, (100, 170, 185, 50))
+
+        if 400 + 100 > mouse[0] > 400 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (400, 170, 100, 50))
+            if click[0] == 1:
+                pygame.quit()
+                quit()
+        else:
+            pygame.draw.rect(screen, white, (400, 170, 100, 50))
+
+        go_text = myFont_large.render("Game Over", False, white)
+        try_text = myFont_medium.render("Try again", False, black)
+        quit_text = myFont_medium.render("Quit", False, black)
+        screen.blit(go_text, (150, 50))
+        screen.blit(try_text, (115, 180))
+        screen.blit(quit_text, (415, 180))
 
         pygame.display.update()
-        clock.tick(5)
+        clock.tick(30)
+
 
 def main():
 
@@ -237,20 +300,21 @@ def main():
                 elif event.key == pygame.K_p:
                     pause()
 
-
         ai_paddle.update(pong)
         player_paddle.update()
         pong.update(player_paddle, ai_paddle)
 
-        if pong.hit_edge_right:
-            gameover()
-            main()
-        elif pong.hit_edge_left:
-            gameover()
-            main()
 
+        if pong.hit_edge_right:
+                gameover()
+                main()
+        elif pong.hit_edge_left:
+                gameover()
+                main()
 
         screen.fill(black)
+
+        pygame.draw.line(screen, white, (320, 0), (320, 320), 3)
 
         ai_paddle.render(screen)
         player_paddle.render(screen)
@@ -259,6 +323,7 @@ def main():
         pygame.display.flip()
 
     pygame.quit()
+
 
 intro()
 main()
