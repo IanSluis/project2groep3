@@ -16,6 +16,17 @@ clock = pygame.time.Clock()
 SCREENRECT = pygame.Rect(0, 0, 640, 480)
 BLACK = (0,0,0)
 WHITE = (255,255,255)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+SKYBLUE = (94,161,255)
+
+#unlocks
+KolorRed = False
+KolorGreen = True
+KolorBlue = False
 
 def launch_game(name):
 	print(name)
@@ -34,7 +45,7 @@ def main(winstyle = 0):
 	
 	SelectedGame = 0
 
-	
+#def draw_text(surf, text, size, x, y):
 	if pygame.font:
 		font = pygame.font.Font(None, 36)
 		text = font.render("KOLOR", 1, (10, 10, 10))
