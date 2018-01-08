@@ -22,6 +22,8 @@ black = (0,0,0)
 white = (255,255,255)
 grey = (210, 210, 210)
 
+playerpoints = 0
+
 
 def intro():
 
@@ -83,8 +85,8 @@ class Pong(object):
 
         self.direction = [1,1]
 
-        self.speedx = 3
-        self.speedy = 6
+        self.speedx = 6
+        self.speedy = 5
 
         self.hit_edge_left = False
         self.hit_edge_right = False
@@ -179,7 +181,6 @@ def pause():
 
     paused = True
 
-
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -271,6 +272,51 @@ def gameover():
         clock.tick(30)
 
 
+def won():
+
+    while won:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_t:
+                    main()
+
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if 100 + 100 > mouse[0] > 100 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (100, 170, 185, 50))
+            if click[0] == 1:
+                main()
+        else:
+            pygame.draw.rect(screen, white, (100, 170, 185, 50))
+
+        if 400 + 100 > mouse[0] > 400 and 170 + 50 > mouse[1] > 170:
+            pygame.draw.rect(screen, grey, (400, 170, 100, 50))
+            if click[0] == 1:
+                pygame.quit()
+                quit()
+        else:
+            pygame.draw.rect(screen, white, (400, 170, 100, 50))
+
+        go_text = myFont_large.render("You won!", False, white)
+        try_text = myFont_medium.render("Try again", False, black)
+        quit_text = myFont_medium.render("Quit", False, black)
+        screen.blit(go_text, (150, 50))
+        screen.blit(try_text, (115, 180))
+        screen.blit(quit_text, (415, 180))
+
+        pygame.display.update()
+        clock.tick(30)
+
+
 def main():
 
     pong = Pong(screensize)
@@ -278,6 +324,8 @@ def main():
     player_paddle = PlayerPaddle(screensize)
 
     running = True
+
+    score = playerpoints
 
     while running:
         clock.tick(60)
@@ -297,20 +345,23 @@ def main():
                 elif event.key == K_DOWN and player_paddle.direction == 1:
                     player_paddle.direction = 0
 
-                elif event.key == pygame.K_p:
+                elif event.key == pygame.K_ESCAPE:
                     pause()
 
         ai_paddle.update(pong)
         player_paddle.update()
         pong.update(player_paddle, ai_paddle)
 
-
         if pong.hit_edge_right:
                 gameover()
                 main()
         elif pong.hit_edge_left:
-                gameover()
+                won()
+                # score = score + 1
                 main()
+
+        if score == 5:
+            won()
 
         screen.fill(black)
 
