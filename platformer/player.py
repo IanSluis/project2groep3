@@ -28,7 +28,7 @@ class Player(pygame.sprite.Sprite):
 		self.image = pygame.Surface([width, height])
 		sprite_sheet = SpriteSheet("pentagon.png")
 		
-		image = sprite_sheet.get_image(0, 0, 50, 47)
+		image = sprite_sheet.get_image(0, 0, 50, 50)
 		self.image = image
  
 		# Set a referance to the image rect.
