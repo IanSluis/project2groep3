@@ -3,6 +3,21 @@ import pygame
 import constants
 import platforms
 
+BGRED = 0
+BGGREEN = 0
+BGBLUE = 0
+if(constants.REDUNLOCKED):
+	BGRED = constants.SKY[0]
+if(constants.GREENUNLOCKED):
+	BGGREEN = constants.SKY[1]
+if(constants.BLUEUNLOCKED):
+	BGBLUE = constants.SKY[2]
+
+BGCOLOR = (BGRED,BGGREEN,BGBLUE)
+
+
+
+
 class Level():
 	""" This is a generic super-class used to define a level.
 		Create a child class for each level with level-specific
@@ -39,12 +54,7 @@ class Level():
 		# Draw the background
 		# We don't shift the background as much as the sprites are shifted
 		# to give a feeling of depth.
-		if(constants.REDUNLOCKED & constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
-			screen.fill(constants.SKYBLUE)
-		elif(constants.BLUEUNLOCKED):
-			screen.fill(constants.BLUE)
-		else:
-			screen.fill(constants.WHITE)
+		screen.fill(BGCOLOR)
 		screen.blit(self.background,(self.world_shift // 3,0))
 
 		# Draw all the sprite lists that we have
@@ -79,18 +89,18 @@ class Level_01(Level):
 		self.level_limit = -2500
 
 		# Array with type of platform, and x, y location of the platform.
-		level = [ [platforms.GRASS_LEFT, 500, 500],
-				  [platforms.GRASS_MIDDLE, 570, 500],
-				  [platforms.GRASS_RIGHT, 640, 500],
-				  [platforms.GRASS_LEFT, 800, 400],
-				  [platforms.GRASS_MIDDLE, 870, 400],
-				  [platforms.GRASS_RIGHT, 940, 400],
-				  [platforms.GRASS_LEFT, 1000, 500],
-				  [platforms.GRASS_MIDDLE, 1070, 500],
-				  [platforms.GRASS_RIGHT, 1140, 500],
-				  [platforms.STONE_PLATFORM_LEFT, 1120, 280],
-				  [platforms.STONE_PLATFORM_MIDDLE, 1190, 280],
-				  [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
+		level = [ 	
+					[platforms.TEST_ONE, -100, 600],
+					[platforms.TEST_ONE, -100, 543],
+					[platforms.TEST_ONE, -100, 486],
+					[platforms.TEST_ONE, -100, 429],
+					[platforms.TEST_ONE, -100, 372],
+					[platforms.TEST_ONE, 570, 500],
+					[platforms.TEST_ONE, 640, 500],
+					[platforms.TEST_ONE, 710, 500],
+					[platforms.TEST_ONE, 710, 443],
+					[platforms.TEST_ONE, 710, 386],
+					[platforms.TEST_ONE, 710, 329],
 				  ]
 
 
@@ -101,9 +111,9 @@ class Level_01(Level):
 			block.rect.y = platform[2]
 			block.player = self.player
 			self.platform_list.add(block)
-
+			
 		# Add a custom moving platform
-		block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+		block = platforms.MovingPlatform(platforms.TEST_TWO)
 		block.rect.x = 1350
 		block.rect.y = 280
 		block.boundary_left = 1350
@@ -129,19 +139,9 @@ class Level_02(Level):
 		self.level_limit = -1000
 
 		# Array with type of platform, and x, y location of the platform.
-		level = [ [platforms.STONE_PLATFORM_LEFT, 500, 550],
-				  [platforms.STONE_PLATFORM_MIDDLE, 570, 550],
-				  [platforms.STONE_PLATFORM_RIGHT, 640, 550],
-				  [platforms.GRASS_LEFT, 800, 400],
-				  [platforms.GRASS_MIDDLE, 870, 400],
-				  [platforms.GRASS_RIGHT, 940, 400],
-				  [platforms.GRASS_LEFT, 1000, 500],
-				  [platforms.GRASS_MIDDLE, 1070, 500],
-				  [platforms.GRASS_RIGHT, 1140, 500],
-				  [platforms.STONE_PLATFORM_LEFT, 1120, 280],
-				  [platforms.STONE_PLATFORM_MIDDLE, 1190, 280],
-				  [platforms.STONE_PLATFORM_RIGHT, 1260, 280],
-				  ]
+		level = [ 	[platforms.TEST_TWO, 570, 550],
+					[platforms.TEST_TWO, 1190, 280],
+				]
 
 
 		# Go through the array above and add platforms
@@ -153,7 +153,7 @@ class Level_02(Level):
 			self.platform_list.add(block)
 
 		# Add a custom moving platform
-		block = platforms.MovingPlatform(platforms.STONE_PLATFORM_MIDDLE)
+		block = platforms.MovingPlatform(platforms.TEST_TWO)
 		block.rect.x = 1500
 		block.rect.y = 300
 		block.boundary_top = 100
