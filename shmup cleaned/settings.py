@@ -12,3 +12,5 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 GRAY = (122, 122, 122)
 kolorgreen = False
+kolorblue = False
+kolorred = False
