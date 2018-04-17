@@ -5,7 +5,7 @@ main_dir = os.path.split(os.path.abspath(__file__))[0]
 print(main_dir)
 platformer_dir = os.path.join(main_dir, 'platformer')
 print(platformer_dir)
-platformer_file = os.path.join(platformer_dir, 'platformer.py')
+platformer_file = os.path.join(platformer_dir, 'platform_scroller.py')
 print(platformer_file)
 space_dir = os.path.join(main_dir, 'shmup cleaned')
 print(space_dir)
