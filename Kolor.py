@@ -56,13 +56,16 @@ def main(winstyle = 0):
 	SelectedGame = 0
 
 #def draw_text(surf, text, size, x, y):
-	if pygame.font:
-		font = pygame.font.Font(None, 36)
-		text = font.render("KOLOR", 1, (10, 10, 10))
-		textpos = text.get_rect(centerx=background.get_width()/2)
-		background.blit(text, textpos)
+
 		
 	while 1:
+		
+		background.fill((255, 255, 255))
+		if pygame.font:
+			font = pygame.font.Font(None, 36)
+			text = font.render("KOLOR", 1, (10, 10, 10))
+			textpos = text.get_rect(centerx=background.get_width()/2)
+			background.blit(text, textpos)
 		
 		#input
 		for event in pygame.event.get():
@@ -70,14 +73,14 @@ def main(winstyle = 0):
 				return
 			elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
 				return
-			elif event.type == pygame.KEYDOWN and event.key == pygame.K_w:
+			elif event.type == pygame.KEYDOWN and (event.key == pygame.K_w or event.key == pygame.K_UP):
 				if SelectedGame != 0:
 					SelectedGame = SelectedGame - 1
 					print("SelectedGame = " + str(SelectedGame))
 				else:
 					SelectedGame = 3
 					print("Selectedgame reset to " + str(SelectedGame))
-			elif event.type == pygame.KEYDOWN and event.key == pygame.K_s:
+			elif event.type == pygame.KEYDOWN and (event.key == pygame.K_s or event.key == pygame.K_DOWN):
 				if SelectedGame != 3:
 					SelectedGame = SelectedGame + 1
 					print("SelectedGame = " + str(SelectedGame))
@@ -87,8 +90,16 @@ def main(winstyle = 0):
 			elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 				print("launching " + str(SelectedGame))
 				chosengame = selectablegames [SelectedGame]
+				print (selectablegames [SelectedGame])
 				launch_game(chosengame)
 		#Draw Everything
+		
+		if pygame.font:
+			font = pygame.font.Font(None, 36)
+			text = font.render(str(selectablegames [SelectedGame]), 1, (10, 10, 10))
+			textpos = text.get_rect(centerx=background.get_width()/2,centery=background.get_height()/2)
+			background.blit(text, textpos)
+		
 		screen.blit(background, (0, 0))
 		pygame.display.flip()
 		
