@@ -3,7 +3,7 @@ This module is used to hold the Player class. The Player represents the user-
 controlled sprite on the screen.
 """
 import pygame
-
+from os import path
 import constants
 
 from platforms import MovingPlatform
@@ -13,42 +13,47 @@ class Player(pygame.sprite.Sprite):
 	"""
 	This class represents the bar at the bottom that the player controls.
 	"""
- 
+
 	# -- Methods
 	def __init__(self):
 		""" Constructor function """
- 
+
 		# Call the parent's constructor
 		super().__init__()
- 
+
 		# Create an image of the block, and fill it with a color.
 		# This could also be an image loaded from the disk.
 		width = 40
 		height = 60
 		self.image = pygame.Surface([width, height])
-		sprite_sheet = SpriteSheet("player.png")
+		print("****")
 		
-		image = sprite_sheet.get_image(0, 0, 50, 50)
+		#copycoda
+		self.dir = path.dirname(__file__)
+		img_dir = path.join(self.dir, 'img')
+		spritesheet = SpriteSheet(path.join(img_dir, "Player.png"))
+		
+		image = spritesheet.get_image(0, 0, 50, 50)
 		self.image = image
- 
+
 		# Set a referance to the image rect.
 		self.rect = self.image.get_rect()
- 
+
 		# Set speed vector of player
 		self.change_x = 0
 		self.change_y = 0
- 
+
 		# List of sprites we can bump against
 		self.level = None
- 
+
 	def update(self):
 		""" Move the player. """
 		# Gravity
 		self.calc_grav()
- 
+
 		# Move left/right
 		self.rect.x += self.change_x
- 
+
 		# See if we hit anything
 		block_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
 		for block in block_hit_list:

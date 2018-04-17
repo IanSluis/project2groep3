@@ -1,5 +1,5 @@
 import pygame
-
+from os import path
 import constants
 import platforms
 
@@ -83,24 +83,44 @@ class Level_01(Level):
 
 		# Call the parent constructor
 		Level.__init__(self, player)
-
-		self.background = pygame.image.load("background_01.png").convert()
+		self.dir = path.dirname(__file__)
+		img_dir = path.join(self.dir, 'img')
+		self.background = pygame.image.load(path.join(img_dir, "background_01.png")).convert()
 		self.background.set_colorkey(constants.RED)
 		self.level_limit = -2500
 
 		# Array with type of platform, and x, y location of the platform.
 		level = [ 	
+					#back wall
 					[platforms.TEST_ONE, -100, 600],
 					[platforms.TEST_ONE, -100, 543],
 					[platforms.TEST_ONE, -100, 486],
 					[platforms.TEST_ONE, -100, 429],
 					[platforms.TEST_ONE, -100, 372],
-					[platforms.TEST_ONE, 570, 500],
-					[platforms.TEST_ONE, 640, 500],
-					[platforms.TEST_ONE, 710, 500],
-					[platforms.TEST_ONE, 710, 443],
-					[platforms.TEST_ONE, 710, 386],
-					[platforms.TEST_ONE, 710, 329],
+					#first platform L shape
+					[platforms.TEST_ONE, 570, 490],
+					[platforms.TEST_ONE, 640, 490],
+					[platforms.TEST_ONE, 710, 490],
+					[platforms.TEST_ONE, 710, 433],
+					[platforms.TEST_ONE, 710, 376],
+					[platforms.TEST_ONE, 710, 319],
+					
+					#jump over it
+					[platforms.TEST_ONE, 430, 386],
+
+					#the second wall that requires the moving platform
+					[platforms.TEST_ONE, 1300, 600],
+					[platforms.TEST_ONE, 1300, 543],
+					[platforms.TEST_ONE, 1300, 486],
+					[platforms.TEST_ONE, 1300, 429],
+					[platforms.TEST_ONE, 1300, 372],
+
+					#jumping part
+					[platforms.TEST_ONE, 1700, 231],
+					[platforms.TEST_ONE, 1550, 436],
+					[platforms.TEST_ONE, 1650, 324],
+					[platforms.TEST_ONE, 1350, 541],
+					
 				  ]
 
 
@@ -114,10 +134,10 @@ class Level_01(Level):
 			
 		# Add a custom moving platform
 		block = platforms.MovingPlatform(platforms.TEST_TWO)
-		block.rect.x = 1350
+		block.rect.x = 1000
 		block.rect.y = 280
-		block.boundary_left = 1350
-		block.boundary_right = 1600
+		block.boundary_left = 800
+		block.boundary_right = 1200
 		block.change_x = 1
 		block.player = self.player
 		block.level = self
@@ -129,14 +149,16 @@ class Level_02(Level):
 	""" Definition for level 2. """
 
 	def __init__(self, player):
-		""" Create level 1. """
+		""" Create level 2. """
 
 		# Call the parent constructor
 		Level.__init__(self, player)
 
-		self.background = pygame.image.load("background_02.png").convert()
+		self.dir = path.dirname(__file__)
+		img_dir = path.join(self.dir, 'img')
+		self.background = pygame.image.load(path.join(img_dir, "background_02.png")).convert()
 		self.background.set_colorkey(constants.RED)
-		self.level_limit = -1000
+		self.level_limit = -2500
 
 		# Array with type of platform, and x, y location of the platform.
 		level = [ 	[platforms.TEST_TWO, 570, 550],

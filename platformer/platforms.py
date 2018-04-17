@@ -3,6 +3,7 @@ Module for managing platforms.
 """
 import pygame
 import constants
+from os import path
 from spritesheet_functions import SpriteSheet
 
 # These constants define our platform types:
@@ -42,7 +43,9 @@ class Platform(pygame.sprite.Sprite):
 			an array of 5 numbers like what's defined at the top of this
 			code. """
 		pygame.sprite.Sprite.__init__(self)
-		sprite_sheet = SpriteSheet(SELECTED_SPRITESHEET)
+		self.dir = path.dirname(__file__)
+		img_dir = path.join(self.dir, 'img')
+		sprite_sheet = SpriteSheet(path.join(img_dir, SELECTED_SPRITESHEET))
 		# Grab the image for this platform
 		self.image = sprite_sheet.get_image(sprite_sheet_data[0],
 											sprite_sheet_data[1],

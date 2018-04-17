@@ -2,25 +2,15 @@ import os, sys, pygame, subprocess
 
 #execfile('file.py')
 main_dir = os.path.split(os.path.abspath(__file__))[0]
-print(main_dir)
 platformer_dir = os.path.join(main_dir, 'platformer')
-print(platformer_dir)
 platformer_file = os.path.join(platformer_dir, 'platform_scroller.py')
-print(platformer_file)
 space_dir = os.path.join(main_dir, 'shmup cleaned')
-print(space_dir)
 space_file = os.path.join(space_dir, 'main.py')
-print(space_file)
 pong_dir = os.path.join(main_dir, 'pong')
-print(pong_dir)
 pong_file =  os.path.join(pong_dir, 'pong.py')
-print(pong_file)
 starjump_dir = os.path.join(main_dir, 'StarJump')
-print(starjump_dir)
 starjump_file = os.path.join(starjump_dir, 'jumpstar.py')
-print(starjump_file)
 selectablegames = [platformer_file,space_file,pong_file,starjump_file]
-print(selectablegames)
 
 clock = pygame.time.Clock() 
 SCREENRECT = pygame.Rect(0, 0, 640, 480)
@@ -41,7 +31,7 @@ KolorBlue = False
 def launch_game(name):
 	print(name)
 	os.popen(name)
-		
+
 def main(winstyle = 0):	
 	pygame.init()
 	pygame.display.set_caption('Kolor')

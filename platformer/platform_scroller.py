@@ -1,5 +1,4 @@
-import pygame
-
+import os, sys, pygame, subprocess
 import constants
 import levels
 
@@ -12,7 +11,9 @@ def main():
 	# Set the height and width of the screen
 	size = [constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT]
 	screen = pygame.display.set_mode(size)
-
+	print("****")
+	main_dir = os.path.split(os.path.abspath(__file__))[0]
+	print(main_dir)
 	pygame.display.set_caption("Platformer")
 
 	# Create the player
@@ -88,10 +89,17 @@ def main():
 				player.level = current_level
 
 		# ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
+		
 		background = pygame.Surface(size)
 		background.fill((0, 0, 0))
 		current_level.draw(screen)
 		active_sprite_list.draw(screen)
+		#really useful debug code
+		if pygame.font:
+			font = pygame.font.Font(None, 36)
+			text = font.render((str(player.rect.x + -current_level.world_shift) + " AND " + str(player.rect.y)), 1, (255, 100, 0))
+			textpos = text.get_rect(centerx=screen.get_width()/2,centery=screen.get_height()/2)
+			screen.blit(text, textpos)
 
 		# ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 

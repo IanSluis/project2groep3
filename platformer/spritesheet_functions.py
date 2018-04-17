@@ -2,7 +2,7 @@
 This module is used to pull individual sprites from sprite sheets.
 """
 import pygame
-
+import os, sys, pygame, subprocess, math
 import constants
 
 class SpriteSheet(object):
