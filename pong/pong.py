@@ -1,5 +1,5 @@
-import pygame, sys
-from pygame.locals import *
+import pygame, sys, random
+from pygame.locals  import *
 
 pygame.init()
 pygame.font.init()
@@ -55,11 +55,11 @@ def intro():
         else:
             pygame.draw.rect(screen, white, (400, 170, 100, 50))
 
-        pong_text = myFont_large.render("Pong", False, white)
+        pong_text = myFont_large.render("Crazy Pong", False, white)
         start_text = myFont_medium.render("Play", False, black)
         quit_text = myFont_medium.render("Quit", False, black)
 
-        screen.blit(pong_text, (220, 50))
+        screen.blit(pong_text, (100, 50))
         screen.blit(start_text, (115, 180))
         screen.blit(quit_text, (415, 180))
 
@@ -83,10 +83,10 @@ class Pong(object):
 
         self.color = (black)
 
-        self.direction = [1,1]
+        self.direction = [- 1, 1]
 
         self.speedx = 6
-        self.speedy = 5
+        self.speedy = 4
 
         self.hit_edge_left = False
         self.hit_edge_right = False
@@ -132,7 +132,7 @@ class AIPaddle(object):
 
         self.color = (black)
 
-        self.speed = 5
+        self.speed = 4
 
     def update(self, pong):
         if pong.rect.top < self.rect.top:
