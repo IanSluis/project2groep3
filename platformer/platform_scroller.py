@@ -1,6 +1,6 @@
 import os, sys, pygame, subprocess
 import constants
-import levels
+import levels,platforms
 
 from player import Player
 
@@ -84,9 +84,13 @@ def main():
 		if current_position < current_level.level_limit:
 			player.rect.x = 120
 			if current_level_no < len(level_list)-1:
-				current_level_no += 1
-				current_level = level_list[current_level_no]
-				player.level = current_level
+				if not (constants.BLUEUNLOCKED):
+					constants.BLUEUNLOCKED = True
+				elif not (constants.REDUNLOCKED):
+					constants.REDUNLOCKED = True
+				elif not (constants.GREENUNLOCKED):
+					constants.GREENUNLOCKED = True
+				main()
 
 		# ALL CODE TO DRAW SHOULD GO BELOW THIS COMMENT
 		
@@ -94,12 +98,6 @@ def main():
 		background.fill((0, 0, 0))
 		current_level.draw(screen)
 		active_sprite_list.draw(screen)
-		#really useful debug code
-		if pygame.font:
-			font = pygame.font.Font(None, 36)
-			text = font.render((str(player.rect.x + -current_level.world_shift) + " AND " + str(player.rect.y)), 1, (255, 100, 0))
-			textpos = text.get_rect(centerx=screen.get_width()/2,centery=screen.get_height()/2)
-			screen.blit(text, textpos)
 
 		# ALL CODE TO DRAW SHOULD GO ABOVE THIS COMMENT
 

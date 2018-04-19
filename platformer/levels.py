@@ -2,6 +2,7 @@ import pygame
 from os import path
 import constants
 import platforms
+import thing
 
 BGRED = 0
 BGGREEN = 0
@@ -42,6 +43,19 @@ class Level():
 		self.enemy_list = pygame.sprite.Group()
 		self.player = player
 
+		BGRED = 0
+		BGGREEN = 0
+		BGBLUE = 0
+
+		if(constants.REDUNLOCKED):
+			BGRED = constants.SKY[0]
+		if(constants.GREENUNLOCKED):
+			BGGREEN = constants.SKY[1]
+		if(constants.BLUEUNLOCKED):
+			BGBLUE = constants.SKY[2]
+
+		BGCOLOR = (BGRED,BGGREEN,BGBLUE)
+
 	# Update everythign on this level
 	def update(self):
 		""" Update everything in this level."""
@@ -50,6 +64,19 @@ class Level():
 
 	def draw(self, screen):
 		""" Draw everything on this level. """
+
+		BGRED = 0
+		BGGREEN = 0
+		BGBLUE = 0
+
+		if(constants.REDUNLOCKED):
+			BGRED = constants.SKY[0]
+		if(constants.GREENUNLOCKED):
+			BGGREEN = constants.SKY[1]
+		if(constants.BLUEUNLOCKED):
+			BGBLUE = constants.SKY[2]
+
+		BGCOLOR = (BGRED,BGGREEN,BGBLUE)
 
 		# Draw the background
 		# We don't shift the background as much as the sprites are shifted
@@ -84,6 +111,20 @@ class Level_01(Level):
 		# Call the parent constructor
 		Level.__init__(self, player)
 		self.dir = path.dirname(__file__)
+
+		BGRED = 0
+		BGGREEN = 0
+		BGBLUE = 0
+
+		if(constants.REDUNLOCKED):
+			BGRED = constants.SKY[0]
+		if(constants.GREENUNLOCKED):
+			BGGREEN = constants.SKY[1]
+		if(constants.BLUEUNLOCKED):
+			BGBLUE = constants.SKY[2]
+
+		BGCOLOR = (BGRED,BGGREEN,BGBLUE)
+
 		img_dir = path.join(self.dir, 'img')
 		self.background = pygame.image.load(path.join(img_dir, "background_01.png")).convert()
 		self.background.set_colorkey(constants.RED)
@@ -120,13 +161,40 @@ class Level_01(Level):
 					[platforms.TEST_ONE, 1550, 436],
 					[platforms.TEST_ONE, 1650, 324],
 					[platforms.TEST_ONE, 1350, 541],
-					
+
+					#jumping part
+					[platforms.TEST_TWO, 2000, 231],
+
+					#wall before the end
+					[platforms.TEST_ONE, 2400, 600],
+					[platforms.TEST_ONE, 2400, 543],
+					[platforms.TEST_ONE, 2400, 486],
+					[platforms.TEST_ONE, 2400, 429],
+					[platforms.TEST_ONE, 2400, 372],
 				  ]
+		things = [ 
+
+			]
+		if not (constants.BLUEUNLOCKED):
+			things.append([thing.BLUETHING, 3560, 550])
+		elif not (constants.REDUNLOCKED):
+			things.append([thing.REDTHING, 3560, 550])
+		elif not (constants.GREENUNLOCKED):
+			things.append([thing.GREENTHING, 3560, 550])
+		else:
+			things.append([thing.WHITETHING, 3560, 550])
 
 
 		# Go through the array above and add platforms
 		for platform in level:
 			block = platforms.Platform(platform[0])
+			block.rect.x = platform[1]
+			block.rect.y = platform[2]
+			block.player = self.player
+			self.platform_list.add(block)
+		
+		for platform in things:
+			block = thing.Thing(platform[0])
 			block.rect.x = platform[1]
 			block.rect.y = platform[2]
 			block.player = self.player

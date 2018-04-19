@@ -17,24 +17,6 @@ TEST_TWO		= (1, 59, 70, 40)
 
 SELECTED_SPRITESHEET = "platforms_black.png"
 
-if(constants.REDUNLOCKED & constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_color.png"
-elif(constants.REDUNLOCKED & constants.GREENUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_red_green.png"
-elif(constants.REDUNLOCKED & constants.BLUEUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_red_bluee.png"
-elif(constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_green_blue.png"
-elif(constants.REDUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_red.png"
-elif(constants.BLUEUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_blue.png"
-elif(constants.GREENUNLOCKED):
-	SELECTED_SPRITESHEET = "platforms_green.png"
-else:
-	SELECTED_SPRITESHEET = "platforms_black.png"
-
-
 class Platform(pygame.sprite.Sprite):
 	""" Platform the user can jump on """
 
@@ -42,6 +24,22 @@ class Platform(pygame.sprite.Sprite):
 		""" Platform constructor. Assumes constructed with user passing in
 			an array of 5 numbers like what's defined at the top of this
 			code. """
+		if(constants.REDUNLOCKED & constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_color.png"
+		elif(constants.REDUNLOCKED & constants.GREENUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red_green.png"
+		elif(constants.REDUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red_blue.png"
+		elif(constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_green_blue.png"
+		elif(constants.REDUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red.png"
+		elif(constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_blue.png"
+		elif(constants.GREENUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_green.png"
+		else:
+			SELECTED_SPRITESHEET = "platforms_black.png"	
 		pygame.sprite.Sprite.__init__(self)
 		self.dir = path.dirname(__file__)
 		img_dir = path.join(self.dir, 'img')
@@ -53,6 +51,24 @@ class Platform(pygame.sprite.Sprite):
 											sprite_sheet_data[3])
 
 		self.rect = self.image.get_rect()	
+
+	def recolor(self):
+		if(constants.REDUNLOCKED & constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_color.png"
+		elif(constants.REDUNLOCKED & constants.GREENUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red_green.png"
+		elif(constants.REDUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red_bluee.png"
+		elif(constants.GREENUNLOCKED & constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_green_blue.png"
+		elif(constants.REDUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_red.png"
+		elif(constants.BLUEUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_blue.png"
+		elif(constants.GREENUNLOCKED):
+			SELECTED_SPRITESHEET = "platforms_green.png"
+		else:
+			SELECTED_SPRITESHEET = "platforms_black.png"
 
 class MovingPlatform(Platform):
 	""" This is a fancier platform that can actually move. """

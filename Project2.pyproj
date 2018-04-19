@@ -27,6 +27,7 @@
     <Compile Include="platformer\platform_scroller.py" />
     <Compile Include="platformer\player.py" />
     <Compile Include="platformer\spritesheet_functions.py" />
+    <Compile Include="platformer\thing.py" />
     <Compile Include="pong\pong.py" />
     <Compile Include="python game stuff\game.py" />
     <Compile Include="python game stuff\sprite test.py" />
